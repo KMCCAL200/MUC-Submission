@@ -41,12 +41,12 @@ public class MapDataDBMgr extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create the table if it does not exist yrt
-        String CREATE_MAPEKFAME_TABLE = "CREATE TABLE IF NOT EXISTS " +
+        String CREATE_MAP_TABLE = "CREATE TABLE IF NOT EXISTS " +
                 TBL_MAPSTUDIOS + "("
                 + COL_ENTRYID + " INTEGER PRIMARY KEY," + COL_NAME
                 + " TEXT," + " TEXT," + COL_WEBSITE + " TEXT,"
                 + " TEXT" + COL_LATITUDE + " FLOAT" + COL_LONGITUDE + " FLOAT" +")";
-        db.execSQL(CREATE_MAPEKFAME_TABLE);
+        db.execSQL(CREATE_MAP_TABLE);
     }
 
     @Override
@@ -117,41 +117,6 @@ public class MapDataDBMgr extends SQLiteOpenHelper {
         {
             throw new Error("Problems copying DB!");
         }
-    }
-
-    public void addaMapStudioEntry(MapData aMapStudio) {
-
-        //add all values to internal database
-        ContentValues values = new ContentValues();
-        values.put(COL_NAME, aMapStudio.getName());
-        values.put(COL_WEBSITE, aMapStudio.getWebsite());
-        values.put(COL_LATITUDE, aMapStudio.getLatitude());
-        values.put(COL_LONGITUDE, aMapStudio.getLongitude());
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TBL_MAPSTUDIOS, null, values);
-        db.close();
-    }
-
-    public MapData getMapStudioEntry(String aMapStudioEntry) {
-        //get data from database
-        String query = "Select * FROM " + TBL_MAPSTUDIOS + " WHERE " + COL_NAME + " =  \"" + aMapStudioEntry + "\"";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        MapData MapDataEntry = new MapData();
-
-        if (cursor.moveToFirst()) {
-            cursor.moveToFirst();
-            MapDataEntry.setEntryID(Integer.parseInt(cursor.getString(0)));
-            MapDataEntry.setName(cursor.getString(1));
-            MapDataEntry.setWebsite(cursor.getString(2));
-            MapDataEntry.setLatitude(Float.parseFloat(cursor.getString(3)));
-            MapDataEntry.setLatitude(Float.parseFloat(cursor.getString(4)));
-            cursor.close();
-        } else {
-            MapDataEntry = null;
-        }
-        db.close();
-        return MapDataEntry;
     }
 
     public List<MapData> allMapData()

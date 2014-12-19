@@ -27,7 +27,6 @@ public class SavingDataOutput extends Activity implements View.OnClickListener {
     EditText edCity;
     EditText edRss;
 
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
 
